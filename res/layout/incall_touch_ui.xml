@@ -47,6 +47,14 @@
         android:visibility="gone"
         android:layout_alignParentBottom="true"
         />
+	
+   <com.android.internal.widget.RingSelector
+        android:id="@+id/incomingRingSelectorCallWidget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        />
 
     <!--
         (2) inCallControls: the widgets visible while a regular call
