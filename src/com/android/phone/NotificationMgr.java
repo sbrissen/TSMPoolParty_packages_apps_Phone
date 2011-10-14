@@ -77,6 +77,8 @@ public class NotificationMgr implements CallerInfoAsyncQuery.OnQueryCompleteList
     static final int DATA_DISCONNECTED_ROAMING_NOTIFICATION = 7;
     static final int SELECTED_OPERATOR_FAIL_NOTIFICATION = 8;
 
+    Intent notificationPhoneIntent = new Intent("com.android.phone.NotificationMgr.MissedPhoneNotification");
+
     private static NotificationMgr sMe = null;
     private Phone mPhone;
     private CallManager mCM;
@@ -423,12 +425,16 @@ public class NotificationMgr implements CallerInfoAsyncQuery.OnQueryCompleteList
                 );
         configureLedNotification(note);
         mNotificationMgr.notify(MISSED_CALL_NOTIFICATION, note);
+        Settings.System.putInt(mContext.getContentResolver(), Settings.System.MISSED_PHONE_EVENT,1);	
+	mContext.sendBroadcast(notificationPhoneIntent);
     }
 
     void cancelMissedCallNotification() {
         // reset the number of missed calls to 0.
         mNumberMissedCalls = 0;
         mNotificationMgr.cancel(MISSED_CALL_NOTIFICATION);
+        Settings.System.putInt(mContext.getContentResolver(), Settings.System.MISSED_PHONE_EVENT,0);
+	mContext.sendBroadcast(notificationPhoneIntent);
     }
 
     void notifySpeakerphone() {
